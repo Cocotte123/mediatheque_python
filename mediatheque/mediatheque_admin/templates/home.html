@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Projet Python Médiathèque</title>
+</head>
+<body>
+    <h1>Médiathèque</h1>
+    <h2>Admnistrateur</h2>
+    <h3>Liste des emprunteurs</h3>
+    <div class="row">
+        <table style="width: 1000px;border: solid black 2px">
+            <thead>
+                <tr>
+                    <td style="width: 200px">Emprunteur Id</td>
+                    <td style="width: 200px">Prénom</td>
+                    <td style="width: 200px">Nom</td>
+                    <td style="width: 200px">Date de création</td>
+                    <td style="width: 200px">Bloqué</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emprunteur in datas_emprunteur %}
+                <tr>
+                    <td>{{emprunteur.id}}</td>
+                    <td>{{emprunteur.first_name}}</td>
+                    <td>{{emprunteur.last_name}}</td>
+                    <td>{{emprunteur.date_creation}}</td>
+                    <td style="background-color: {{emprunteur.statut_emprunteur}}">{{emprunteur.bloque}}</td>
+                    <td>
+                        <form action="{% url 'delete_emprunteur' emprunteur.id%}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="Supprimer" class="btn">
+                        </form>
+                    </td>
+                     <td>
+                         <td>
+                        <form action="{% url 'update_emprunteur' emprunteur.id%}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="Modifier statut" class="btn">
+                        </form>
+                    </td>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    <h3>Ajouter un emprunteur</h3>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" placeholder="Prénom" name="first_name" required maxlength="40">
+        <input type="text" placeholder="Nom" name="last_name"  required maxlength="40">
+        <button type="submit">Ajouter</button>
+    </form>
+
+</body>
+</html>
